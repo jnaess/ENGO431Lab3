@@ -1,13 +1,20 @@
+
+
+#include "Point.h"
+#include "Model.h"
+#include "Functions.h"
+#include "LSA.h"
+
+#include <vector>
+#include <cmath>
+#include <Eigen/Dense>
+#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
 
-#include "rinex.h"
-#include "NRinexUtils.h"
-#include "LSA.h"
-#include "data.h"
-#include "Measurement.h"
-#include "Epoch.h"
+
 
 
 using namespace std;
@@ -17,6 +24,9 @@ using namespace Eigen;
 
 int main()
 {
-    
+    LSA lsa = LSA("Tie_points_corrected.txt");
+
+    lsa.outputModels();
+
     return 0;
 }

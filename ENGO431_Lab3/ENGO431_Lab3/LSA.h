@@ -1,10 +1,10 @@
 #pragma once
+#include <vector>
 
 #include "Point.h"
 #include "Model.h"
-#include "LSA.h"
 
-#include <vector>
+
 #include <cmath>
 #include <Eigen/Dense>
 #include <iomanip>
@@ -16,12 +16,25 @@ using namespace Eigen;
 using namespace std;
 
 class LSA {
-    vector<Model> models;
+
 
 public:
+    vector<Model> models;
 
     //Constructor
     LSA();
+
+    /*
+    Definition:
+        Contructs the vector of models by iterated line by line through the file
+        Skips the first two lines
+    Input:
+        string filename
+
+    Output:
+
+    */
+    LSA(string filename);
 
     /*
     Definition:
@@ -33,7 +46,17 @@ public:
 
     */
     void AddModel(string line);
-}
+
+    /*
+    Definition:
+        Iterates through the vector of models and outputs all values
+    Input:
+        
+    Output:
+
+    */
+    void outputModels();
+};
 
 
 

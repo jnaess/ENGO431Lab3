@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Functions.h"
-#include "LSA.h"
 #include "Point.h"
 
 #include <vector>
@@ -28,8 +27,7 @@ public:
         Assigns the mesurements via
         a string line that is processed
     Input:
-        string line: the file line
-        double Epoch: the epoch for the line given
+        string line: the file line format: "x27 y27 x28 y28"
     Output:
 
     */
@@ -40,9 +38,19 @@ public:
     Definition:
         Reads in the file line to initialize several class variables
     Input:
-
+        string line: the file line format: "x27 y27 x28 y28"
     Output:
 
     */
     void readLine(string line);
+
+    /*
+    Definition:
+        Outputs all values in the model formatted for readablity
+    Input:
+        
+    Output:
+
+    */
+    void outputAll();
 };

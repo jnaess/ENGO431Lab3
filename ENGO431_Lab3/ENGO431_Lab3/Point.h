@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Functions.h"
-#include "Model.h"
-#include "LSA.h"
 
 #include <vector>
 #include <cmath>
