@@ -16,6 +16,14 @@ using namespace std;
 
 class Model {
     double x27, y27, x28, y28;
+	double Pby, Pbz, Pomega, Pphi, Pkappa;
+	double c = 153.358;
+	double bx = 92;
+	double by = 0;
+	double bz = 0;
+	double omega = 0;
+	double phi = 0;
+	double kappa = 0;
 
 public:
 
@@ -44,6 +52,18 @@ public:
     */
     void readLine(string line);
 
+	/*
+   Definition:
+	   Returns a rotation matrix about x(1),y(2), or z(3) axis
+   Input:
+	   rotation angle and axis(1,2,3)
+   Output:
+
+   */
+	MatrixXd rotate(double angle, int axis);
+
+
+	void partial();
     /*
     Definition:
         Outputs all values in the model formatted for readablity
@@ -53,4 +73,5 @@ public:
 
     */
     void outputAll();
+
 };
