@@ -58,21 +58,32 @@ void LSA::designAw() {
 	cout << "misclosure" << endl << wv << endl;
 }
 
+
 void LSA::delta() {
 	cout << counter << endl;
 	MatrixXd delta(5, 1);
 	MatrixXd xhat(5, 1);
 	MatrixXd N(A.cols(), A.rows());
 	N = A.transpose() * A;
-	delta = -1*N.inverse() * A.transpose() * wv;
+	cout << "N" << endl << N << endl;
+	//cout << "N inverse" << N.inverse() << endl;
+	HouseholderQR<MatrixXd> qr(N);
+	delta = -qr.solve(A.transpose()*wv);
 	cout << "delta" <<endl << delta << endl;
 	xhat = xo + delta;
-	if (abs(delta.maxCoeff()) > 0.00005) {
+	if (abs(delta.maxCoeff()) > 0.00001 && counter<4) {
 		xo = xhat;
 		counter++;
 	}
-	else criteria = true;
+	else {
+		criteria = true;
+		for (unsigned int i = 0; i < A.rows(); i++) {
+			models[i].modelCoord(xhat);
+		}
+
+	}
 	cout << "xhat" <<endl<< xhat << endl;
+	
 
 }
 

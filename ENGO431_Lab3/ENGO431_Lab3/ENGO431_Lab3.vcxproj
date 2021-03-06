@@ -73,7 +73,7 @@
     <IncludePath>C:\Users\Jan Erik Naess\OneDrive - University of Calgary\363\eigen-3.3.7;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Jan Erik Naess\OneDrive - University of Calgary\363\eigen-3.3.7;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Nuna Min\ENGO431Lab3\eigen-3.3.9\eigen-3.3.9\Eigen;C:\Users\Jan Erik Naess\OneDrive - University of Calgary\363\eigen-3.3.7;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -92,7 +92,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Nuna Min\OneDrive - University of Calgary\ENGO465\eigen-3.2.10;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Nuna Min\ENGO431Lab3\eigen-3.2.10;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

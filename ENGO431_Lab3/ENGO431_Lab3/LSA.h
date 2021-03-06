@@ -49,7 +49,7 @@ public:
     */
     void AddModel(string line);
 
-	void initialize(MatrixXd initial);
+
 	
 	void designAw();
 	

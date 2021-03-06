@@ -20,9 +20,12 @@ class Model {
 
 public:
 	double Pby, Pbz, Pomega, Pphi, Pkappa;
-	double c = 153.358;
+	double c = 152.15;
 	double bx = 92;
-	double w; //misclosure
+	double w =0; //misclosure
+	double pY =0;
+	MatrixXd RiT;
+	MatrixXd xyzm;
     //Constructor
     Model();
 
@@ -69,7 +72,7 @@ public:
   */
 	void partial(MatrixXd xo);
 
-
+	void modelCoord(MatrixXd xhat);
     /*
     Definition:
         Outputs all values in the model formatted for readablity

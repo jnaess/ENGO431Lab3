@@ -24,14 +24,15 @@ using namespace Eigen;
 
 int main()
 {
-    LSA lsa = LSA("Tie_points_corrected.txt");
-	//LSA lsa = LSA("sample.txt");
+    //LSA lsa = LSA("Tie_points_corrected.txt");
+	LSA lsa = LSA("sample.txt");
 
     lsa.outputModels();
 	while (!lsa.criteria) {
 		lsa.designAw();
 		lsa.delta();
 	}
+	
 
     return 0;
 }

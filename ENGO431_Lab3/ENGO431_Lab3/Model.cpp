@@ -59,8 +59,10 @@ void Model::partial(MatrixXd xo) {
 	MatrixXd Ri(3, 1); //Right image (x,y,z)
 	Ri << x28,
 		y28,
-		0;
-	MatrixXd RiT = rotate(-omega, 1) * rotate(-phi, 2) * rotate(-kappa, 3) * Ri; //Transformed to the left image
+		-c;
+
+	RiT.resize(3,3);
+	RiT = rotate(-omega, 1) * rotate(-phi, 2) * rotate(-kappa, 3) * Ri; //Transformed to the left image
 	
 	double xr = RiT(0, 0);
 	double yr = RiT(1, 0);
@@ -70,6 +72,7 @@ void Model::partial(MatrixXd xo) {
 	Mby << 0, 1, 0,
 		x27, y27, -c,
 		xr, yr, zr;
+	
 	MatrixXd Mbz(3, 3);
 	Mbz << 0, 0, 1,
 		x27, y27, -c,
@@ -99,7 +102,20 @@ void Model::partial(MatrixXd xo) {
 	w = Mw.determinant();
 	//cout <<  Pby <<"  "<< Pbz << "  " << Pomega << "  " << Pphi << "  " << Pkappa<< endl;
 }
-
+void Model::modelCoord(MatrixXd xhat) {
+	double lamda = (bx * RiT(2, 0) - xhat(1, 0) * RiT(0, 0)) / (x27 * RiT(2, 0) + c * RiT(0, 0));
+	double mu = (-bx * c - RiT(2, 0) * x27) / (x27 * RiT(2, 0) + c * RiT(0, 0));
+	xyzm.resize(3,2);
+	xyzm(0, 0) = lamda * x27;
+	xyzm(1, 0) = lamda * y27;
+	xyzm(2, 0) = -lamda * c;
+	xyzm(0, 1) = mu*RiT(0,0)+bx;
+	xyzm(1, 1) = mu * RiT(1, 0) + xhat(0,0);
+	xyzm(2, 1) = mu * RiT(0, 0) + xhat(1, 0);
+	pY = xyzm(1, 1) - xyzm(1, 0);
+	cout << "model coordinates" << endl << xyzm << endl;
+	cout << "y-parallex" << endl << pY<< endl;
+ }
 void Model::outputAll() {
     cout << "x27: " << x27 << " y27: " << y27 << " x28: " << x28 << "y28: " << y28 << endl;
 }
