@@ -50,41 +50,54 @@ MatrixXd Model::rotate(double angle, int axis) {
 	return R;
 
 }
-void Model::partial() {
+void Model::partial(MatrixXd xo) {
+	double by = xo(0,0);
+	double bz = xo(1, 0);
+	double omega = xo(2, 0);
+	double phi = xo(3, 0);
+	double kappa = xo(4, 0);
 	MatrixXd Ri(3, 1); //Right image (x,y,z)
 	Ri << x28,
 		y28,
 		0;
 	MatrixXd RiT = rotate(-omega, 1) * rotate(-phi, 2) * rotate(-kappa, 3) * Ri; //Transformed to the left image
+	
 	double xr = RiT(0, 0);
 	double yr = RiT(1, 0);
 	double zr = RiT(2, 0);
+	
 	MatrixXd Mby(3, 3);
 	Mby << 0, 1, 0,
 		x27, y27, -c,
 		xr, yr, zr;
 	MatrixXd Mbz(3, 3);
-	Mby << 0, 0, 1,
+	Mbz << 0, 0, 1,
 		x27, y27, -c,
 		xr, yr, zr;
 	MatrixXd Momega(3, 3);
-	Mby << bx, by, bz,
+	Momega << bx, by, bz,
 		x27, y27, -c,
 		0, -zr, yr;
 	MatrixXd Mphi(3, 3);
-	Mby << bx, by, bz,
+	Mphi << bx, by, bz,
 		x27, y27, -c,
 		-yr*sin(omega)+zr*cos(omega), xr*sin(omega), -xr*cos(omega);
 	MatrixXd Mkappa(3, 3);
-	Mby << bx, by, bz,
+	Mkappa << bx, by, bz,
 		x27, y27, -c,
 		-yr*cos(omega)*cos(phi)-zr*sin(omega)*cos(phi), xr*cos(omega)*cos(phi)-zr*sin(phi), xr*sin(omega)*cos(phi)+yr*sin(phi);
+	MatrixXd Mw(3, 3);
+	Mw << bx, by, bz,
+		x27, y27, -c,
+		xr, yr, zr;
 
 	Pby = Mby.determinant();
 	Pbz = Mbz.determinant();
 	Pomega = Momega.determinant();
 	Pphi = Mphi.determinant();
 	Pkappa = Mkappa.determinant();
+	w = Mw.determinant();
+	//cout <<  Pby <<"  "<< Pbz << "  " << Pomega << "  " << Pphi << "  " << Pkappa<< endl;
 }
 
 void Model::outputAll() {

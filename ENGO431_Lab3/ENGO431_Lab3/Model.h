@@ -16,17 +16,13 @@ using namespace std;
 
 class Model {
     double x27, y27, x28, y28;
+
+
+public:
 	double Pby, Pbz, Pomega, Pphi, Pkappa;
 	double c = 153.358;
 	double bx = 92;
-	double by = 0;
-	double bz = 0;
-	double omega = 0;
-	double phi = 0;
-	double kappa = 0;
-
-public:
-
+	double w; //misclosure
     //Constructor
     Model();
 
@@ -58,12 +54,22 @@ public:
    Input:
 	   rotation angle and axis(1,2,3)
    Output:
+		Rotation Matrix
 
    */
 	MatrixXd rotate(double angle, int axis);
 
+	/*
+  Definition:
+	  Finds partial derivatives of each parameter
+  Input:
+		
+  Output:
+		Partial derivatives of by, bz, omega, phi and kappa
+  */
+	void partial(MatrixXd xo);
 
-	void partial();
+
     /*
     Definition:
         Outputs all values in the model formatted for readablity
