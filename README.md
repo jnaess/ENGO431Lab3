@@ -10,3 +10,5 @@ git commit -m "message here"
 git push
 
 git pull
+
+a word
