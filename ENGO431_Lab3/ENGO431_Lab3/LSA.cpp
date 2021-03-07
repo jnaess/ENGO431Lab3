@@ -31,6 +31,7 @@ LSA::LSA(string filename)
             //increment ot next line
             i++;
         }
+
         file.close();
     }
 }
@@ -42,11 +43,11 @@ void LSA::AddModel(string line) {
 
 
 void LSA::designAw() {
-	A.resize(models.size(), 5);
+	A.resize(models.size(), m);
 	wv.resize(A.rows(),1);
 	
 	if (counter == 0) {
-		xo.resize(5, 1);
+		xo.resize(m, 1);
 		xo.setZero();
 	}
 		for (unsigned int i = 0; i < A.rows(); i++) {
@@ -61,8 +62,8 @@ void LSA::designAw() {
 
 void LSA::delta() {
 	cout << counter << endl;
-	MatrixXd delta(5, 1);
-	MatrixXd xhat(5, 1);
+	MatrixXd delta(m, 1);
+	MatrixXd xhat(m, 1);
 	MatrixXd N(A.cols(), A.rows());
 	N = A.transpose() * A;
 	cout << "N" << endl << N << endl;

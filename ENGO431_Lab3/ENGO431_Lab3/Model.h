@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Functions.h"
-#include "Point.h"
 
 #include <vector>
 #include <cmath>
@@ -20,7 +19,8 @@ class Model {
 
 public:
 	double Pby, Pbz, Pomega, Pphi, Pkappa;
-	double c = 152.15;
+	//double c = 152.15; // sample data
+    double c = 153.358; // our data
 	double bx = 92;
 	double w =0; //misclosure
 	double pY =0;

@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "Point.h"
+
 #include "Model.h"
 
 
@@ -20,7 +20,7 @@ class LSA {
 public:
 
     MatrixXd A, wv, xhat, xo, N, Cx, C; // design matrix, misclosure vector C: correlation coeficianet matrix
-    int counter = 0;
+    int counter = 0, m = 5;
     vector<Model> models;
 	bool criteria = false;
 

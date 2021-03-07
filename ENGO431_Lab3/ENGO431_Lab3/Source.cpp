@@ -1,6 +1,5 @@
 
 
-#include "Point.h"
 #include "Model.h"
 #include "Functions.h"
 #include "LSA.h"
@@ -24,15 +23,16 @@ using namespace Eigen;
 
 int main()
 {
-    //LSA lsa = LSA("Tie_points_corrected.txt");
-	LSA lsa = LSA("sample.txt");
+    LSA ls = LSA("Tie_points_corrected.txt");
+	//LSA ls = LSA("sample.txt");
+	//LSA ls = LSA("object.txt");
 
-    lsa.outputModels();
-	while (!lsa.criteria) {
-		lsa.designAw();
-		lsa.delta();
+    ls.outputModels();
+	while (!ls.criteria) {
+		ls.designAw();
+		ls.delta();
 	}
 	
-	cout << lsa.cc();
+	cout << ls.cc();
     return 0;
 }
