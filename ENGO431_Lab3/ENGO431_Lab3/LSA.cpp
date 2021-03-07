@@ -55,24 +55,26 @@ void LSA::designAw() {
 		A.row(i) << models[i].Pby, models[i].Pbz, models[i].Pomega, models[i].Pphi, models[i].Pkappa;
 		wv(i, 0) = models[i].w;
 	}
-	cout << "design matrix A"<< endl<< A << endl;
-	cout << "misclosure" << endl << wv << endl;
+	cout << endl << "design matrix A"<< endl<< A << endl;
+	cout << endl << "misclosure" << endl << wv << endl;
 }
 
 
 void LSA::delta() {
-	cout << counter << endl;
+	cout << endl << "Iteration count: " << counter << endl;
 	MatrixXd delta(m, 1);
 	MatrixXd xhat(m, 1);
 	MatrixXd N(A.cols(), A.rows());
 	N = A.transpose() * A;
-	cout << "N" << endl << N << endl;
+	cout << endl << "N" << endl << N << endl;
 	Cx = N.inverse();
-	cout << "Cx" << endl << Cx << endl;
+	cout << endl << "Cx" << endl << Cx << endl;
 	//cout << "N inverse" << N.inverse() << endl;
-	HouseholderQR<MatrixXd> qr(N);
-	delta = -qr.solve(A.transpose()*wv);
-	cout << "delta" <<endl << delta << endl;
+	//HouseholderQR<MatrixXd> qr(N);
+	//delta = -qr.solve(A.transpose()*wv);
+
+	delta = -1.0 * N.inverse() * A.transpose() * wv;
+	cout << endl << "delta" <<endl << delta << endl;
 	xhat = xo + delta;
 	if (abs(delta.maxCoeff()) > 0.00001 && counter<4) {
 		xo = xhat;
@@ -85,7 +87,7 @@ void LSA::delta() {
 		}
 
 	}
-	cout << "xhat" <<endl<< xhat << endl;
+	cout << endl << "xhat" <<endl<< xhat << endl;
 	
 
 }

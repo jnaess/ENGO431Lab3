@@ -116,7 +116,7 @@ void Model::modelCoord(MatrixXd xhat) {
 	xyzm(2, 1) = mu * RiT(0, 0) + xhat(1, 0);
 	pY = xyzm(1, 1) - xyzm(1, 0);
 	//cout << "model coordinates" << endl << xyzm << endl;
-	cout << "y-parallex" << endl << pY<< endl;
+	cout << endl << "y-parallax" << endl << pY<< endl;
  }
 
 void Model::outputAll() {

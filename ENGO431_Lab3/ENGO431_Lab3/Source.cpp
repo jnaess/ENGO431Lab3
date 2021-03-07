@@ -33,6 +33,6 @@ int main()
 		ls.delta();
 	}
 	
-	cout << ls.cc();
+	cout << endl << "Correlation matrix cc" << endl << ls.cc();
     return 0;
 }
