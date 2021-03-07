@@ -16,13 +16,15 @@ using namespace Eigen;
 using namespace std;
 
 class LSA {
-
-	MatrixXd A, wv, xhat,xo; // design matrix, misclosure vector
-	int counter = 0;
 	
 public:
+
+    MatrixXd A, wv, xhat, xo, N, Cx, C; // design matrix, misclosure vector C: correlation coeficianet matrix
+    int counter = 0;
     vector<Model> models;
 	bool criteria = false;
+
+
     //Constructor
     LSA();
 
@@ -54,6 +56,7 @@ public:
 	void designAw();
 	
 	void delta();
+
     /*
     Definition:
         Iterates through the vector of models and outputs all values
@@ -63,6 +66,17 @@ public:
 
     */
     void outputModels();
+
+    /*
+    Definition:
+        Initialized the correlation coefficient matrix
+        Cx  must be initialized beforehand
+    Input:
+
+    Output:
+        MatrixXd correlation coeficient
+    */
+    MatrixXd cc();
 };
 
 

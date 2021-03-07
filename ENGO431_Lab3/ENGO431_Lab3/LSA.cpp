@@ -66,6 +66,8 @@ void LSA::delta() {
 	MatrixXd N(A.cols(), A.rows());
 	N = A.transpose() * A;
 	cout << "N" << endl << N << endl;
+	Cx = N.inverse();
+	cout << "Cx" << endl << Cx << endl;
 	//cout << "N inverse" << N.inverse() << endl;
 	HouseholderQR<MatrixXd> qr(N);
 	delta = -qr.solve(A.transpose()*wv);
@@ -93,3 +95,17 @@ void LSA::outputModels() {
     }
 }
 
+MatrixXd LSA::cc() {
+	int n = Cx.rows();
+	C = MatrixXd(n, n);
+
+	for (int i = 0; i < n; i++) {
+		for(int j = 0; j < i; j++) {
+			C(i, j) = Cx(i, j) / sqrt(Cx(i, i) * Cx(j, j));
+			C(j, i) = Cx(i, j) / sqrt(Cx(i, i) * Cx(j, j));
+		}
+		C(i, i) = 1;
+	}
+
+	return C;
+}

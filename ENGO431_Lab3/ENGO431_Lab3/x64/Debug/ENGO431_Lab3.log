@@ -1,5 +1,3 @@
 ﻿  LSA.cpp
-  Model.cpp
-  Source.cpp
-  Generating Code...
-  ENGO431_Lab3.vcxproj -> C:\Users\Nuna Min\ENGO431Lab3\ENGO431_Lab3\x64\Debug\ENGO431_Lab3.exe
+C:\Users\Jan Erik Naess\Winter2021Labs\ENGO431Lab3\ENGO431_Lab3\ENGO431_Lab3\LSA.cpp(99,8): warning C4244: 'initializing': conversion from 'Eigen::Index' to 'int', possible loss of data
+  ENGO431_Lab3.vcxproj -> C:\Users\Jan Erik Naess\Winter2021Labs\ENGO431Lab3\ENGO431_Lab3\x64\Debug\ENGO431_Lab3.exe

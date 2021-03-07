@@ -33,6 +33,6 @@ int main()
 		lsa.delta();
 	}
 	
-
+	cout << lsa.cc();
     return 0;
 }

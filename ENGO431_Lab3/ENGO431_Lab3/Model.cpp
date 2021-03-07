@@ -50,6 +50,7 @@ MatrixXd Model::rotate(double angle, int axis) {
 	return R;
 
 }
+
 void Model::partial(MatrixXd xo) {
 	double by = xo(0,0);
 	double bz = xo(1, 0);
@@ -104,7 +105,7 @@ void Model::partial(MatrixXd xo) {
 }
 void Model::modelCoord(MatrixXd xhat) {
 	double lamda = (bx * RiT(2, 0) - xhat(1, 0) * RiT(0, 0)) / (x27 * RiT(2, 0) + c * RiT(0, 0));
-	double mu = (-bx * c - RiT(2, 0) * x27) / (x27 * RiT(2, 0) + c * RiT(0, 0));
+	double mu = (-bx * c - xhat(1, 0) * x27) / (x27 * RiT(2, 0) + c * RiT(0, 0));
 	xyzm.resize(3,2);
 	xyzm(0, 0) = lamda * x27;
 	xyzm(1, 0) = lamda * y27;
@@ -116,6 +117,7 @@ void Model::modelCoord(MatrixXd xhat) {
 	cout << "model coordinates" << endl << xyzm << endl;
 	cout << "y-parallex" << endl << pY<< endl;
  }
+
 void Model::outputAll() {
     cout << "x27: " << x27 << " y27: " << y27 << " x28: " << x28 << "y28: " << y28 << endl;
 }
