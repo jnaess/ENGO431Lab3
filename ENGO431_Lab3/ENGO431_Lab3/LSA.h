@@ -22,6 +22,7 @@ public:
     MatrixXd A, wv, xhat, xo, N, Cx, C; // design matrix, misclosure vector C: correlation coeficianet matrix
     int counter = 0, m = 5;
     vector<Model> models;
+    vector<Model> objectPoints;
 	bool criteria = false;
 
 
@@ -77,6 +78,26 @@ public:
         MatrixXd correlation coeficient
     */
     MatrixXd cc();
+
+    /*
+    Definition:
+        After the least squares opperation is done use this functions to initialize the odjectpoint vector
+    Input:
+        string filename of the oject points
+    Output:
+        
+    */
+    void setUpObjectPoint(string filename);
+
+    /*
+    Definition:
+        Gets the model points via the parameters found form the least squares opperation
+    Input:
+        none, but objectPoints must have been initialized
+    Output:
+
+    */
+    void getObjectPoints();
 };
 
 

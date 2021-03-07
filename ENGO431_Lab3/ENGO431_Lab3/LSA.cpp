@@ -63,7 +63,7 @@ void LSA::designAw() {
 void LSA::delta() {
 	cout << endl << "Iteration count: " << counter << endl;
 	MatrixXd delta(m, 1);
-	MatrixXd xhat(m, 1);
+	xhat = MatrixXd(m, 1);
 	MatrixXd N(A.cols(), A.rows());
 	N = A.transpose() * A;
 	cout << endl << "N" << endl << N << endl;
@@ -111,4 +111,41 @@ MatrixXd LSA::cc() {
 	}
 
 	return C;
+}
+
+void LSA::setUpObjectPoint(string filename) {
+	ifstream file(filename);
+
+	if (file.is_open()) {
+		string line;
+
+		//these are used to compare the type of input to read
+		int i = 0;
+
+		while (getline(file, line)) {
+			//Update the filetype
+			//If it switches value then another line needs to be read
+
+			//Only read after line two
+			if (i >= 2) {
+				//add a new model
+				cout << "adding the line: " << line << endl;
+				objectPoints.emplace_back(line);
+				//AddModel(line);
+			}
+
+			//increment ot next line
+			i++;
+		}
+
+		file.close();
+	}
+}
+
+void LSA::getObjectPoints() {
+	cout << objectPoints.size() << endl;
+	cout << xhat << endl;
+	for (int i = 0; i < objectPoints.size(); i++) {
+		objectPoints[i].modelCoord(xhat);
+	}
 }

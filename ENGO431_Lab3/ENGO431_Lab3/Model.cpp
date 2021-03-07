@@ -104,7 +104,16 @@ void Model::partial(MatrixXd xo) {
 	w = Mw.determinant();
 	//cout <<  Pby <<"  "<< Pbz << "  " << Pomega << "  " << Pphi << "  " << Pkappa<< endl;
 }
+
 void Model::modelCoord(MatrixXd xhat) {
+	MatrixXd Ri(3, 1); //Right image (x,y,z)
+	Ri << x28,
+		y28,
+		-c;
+
+	RiT.resize(3, 3);
+	RiT = rotate(-xhat(2,0), 1) * rotate(-xhat(3,0), 2) * rotate(-xhat(4,0), 3) * Ri; //Transformed to the left image
+
 	double lamda = (bx * RiT(2, 0) - xhat(1, 0) * RiT(0, 0)) / (x27 * RiT(2, 0) + c * RiT(0, 0));
 	double mu = (-bx * c - xhat(1, 0) * x27) / (x27 * RiT(2, 0) + c * RiT(0, 0));
 
@@ -127,7 +136,7 @@ void Model::modelCoord(MatrixXd xhat) {
 	xyzm(0, 2) = xyzm_lr(2, 0);
 
 	cout << endl << "model coordinates" << endl << xyzm << endl;
-	cout << "y-parallax" << endl << pY<< endl;
+	//cout << "y-parallax" << endl << pY<< endl;
  }
 
 void Model::outputAll() {

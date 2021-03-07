@@ -23,9 +23,9 @@ using namespace Eigen;
 
 int main()
 {
-    //LSA ls = LSA("Tie_points_corrected.txt");
-	LSA ls = LSA("sample.txt");
-	//LSA ls = LSA("object.txt");
+    LSA ls = LSA("Tie_points_corrected.txt");
+	//LSA ls = LSA("sample.txt");
+	ls.setUpObjectPoint("object.txt");
 
     ls.outputModels();
 	while (!ls.criteria) {
@@ -34,5 +34,8 @@ int main()
 	}
 	
 	cout << endl << "Correlation matrix cc" << endl << ls.cc();
+
+	cout << endl << "testing the object points: " << endl;
+	ls.getObjectPoints();
     return 0;
 }
