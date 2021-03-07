@@ -23,8 +23,8 @@ using namespace Eigen;
 
 int main()
 {
-    LSA ls = LSA("Tie_points_corrected.txt");
-	//LSA ls = LSA("sample.txt");
+    //LSA ls = LSA("Tie_points_corrected.txt");
+	LSA ls = LSA("sample.txt");
 	//LSA ls = LSA("object.txt");
 
     ls.outputModels();

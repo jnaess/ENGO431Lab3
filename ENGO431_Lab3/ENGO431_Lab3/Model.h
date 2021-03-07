@@ -19,13 +19,14 @@ class Model {
 
 public:
 	double Pby, Pbz, Pomega, Pphi, Pkappa;
-	//double c = 152.15; // sample data
-    double c = 153.358; // our data
+	double c = 152.15; // sample data
+    //double c = 153.358; // our data
 	double bx = 92;
 	double w =0; //misclosure
 	double pY =0;
 	MatrixXd RiT;
-	MatrixXd xyzm;
+	MatrixXd xyzm_lr;
+    MatrixXd xyzm;
     //Constructor
     Model();
 

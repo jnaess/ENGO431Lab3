@@ -107,16 +107,27 @@ void Model::partial(MatrixXd xo) {
 void Model::modelCoord(MatrixXd xhat) {
 	double lamda = (bx * RiT(2, 0) - xhat(1, 0) * RiT(0, 0)) / (x27 * RiT(2, 0) + c * RiT(0, 0));
 	double mu = (-bx * c - xhat(1, 0) * x27) / (x27 * RiT(2, 0) + c * RiT(0, 0));
-	xyzm.resize(3,2);
-	xyzm(0, 0) = lamda * x27;
-	xyzm(1, 0) = lamda * y27;
-	xyzm(2, 0) = -lamda * c;
-	xyzm(0, 1) = mu*RiT(0,0)+bx;
-	xyzm(1, 1) = mu * RiT(1, 0) + xhat(0,0);
-	xyzm(2, 1) = mu * RiT(0, 0) + xhat(1, 0);
-	pY = xyzm(1, 1) - xyzm(1, 0);
-	//cout << "model coordinates" << endl << xyzm << endl;
-	cout << endl << "y-parallax" << endl << pY<< endl;
+
+	// Compute left/right model coordinates
+	xyzm_lr.resize(3,2);
+	xyzm_lr(0, 0) = lamda * x27;
+	xyzm_lr(1, 0) = lamda * y27;
+	xyzm_lr(2, 0) = -lamda * c;
+	xyzm_lr(0, 1) = mu * RiT(0, 0) + bx;
+	xyzm_lr(1, 1) = mu * RiT(1, 0) + xhat(0,0);
+	xyzm_lr(2, 1) = mu * RiT(2, 0) + xhat(1, 0);
+
+	// Calculate y-parallax value
+	pY = xyzm_lr(1, 1) - xyzm_lr(1, 0);
+
+	// Calculate merged model coordiantes
+	xyzm.resize(1, 3);
+	xyzm(0, 0) = xyzm_lr(0, 0);
+	xyzm(0, 1) = (xyzm_lr(1, 0) + xyzm_lr(1, 1)) / 2;
+	xyzm(0, 2) = xyzm_lr(2, 0);
+
+	cout << endl << "model coordinates" << endl << xyzm << endl;
+	cout << "y-parallax" << endl << pY<< endl;
  }
 
 void Model::outputAll() {
