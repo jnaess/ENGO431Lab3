@@ -62,6 +62,29 @@ double radians(double deg) {
     return deg * PI / 180;
 }
 
+MatrixXd rotate(double angle, int axis) {
+	MatrixXd R(3, 3);
+	if (axis == 1) {
+		R << 1, 0, 0,
+			0, cos(angle), sin(angle),
+			0, -sin(angle), cos(angle);
+	}
+	else if (axis == 2) {
+		R << cos(angle), 0, -sin(angle),
+			0, 1, 0,
+			sin(angle), 0, cos(angle);
+	}
+	else if (axis == 3) {
+		R << cos(angle), sin(angle), 0,
+			-sin(angle), cos(angle), 0,
+			0, 0, 1;
+	}
+	else cout << "invalid axis" << endl;
+
+	return R;
+
+}
+
 void print_mat(MatrixXd mat, string name)
 {
     cout << "\n" << name << "\n";

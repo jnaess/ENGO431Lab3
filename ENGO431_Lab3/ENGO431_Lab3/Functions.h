@@ -81,6 +81,17 @@ Output:
 */
 double radians(double deg);
 
+/*
+Definition:
+	Returns a rotation matrix about x(1),y(2), or z(3) axis
+Input:
+	rotation angle and axis(1,2,3)
+Output:
+	 Rotation Matrix
+
+*/
+MatrixXd rotate(double angle, int axis);
+
 /*Function: print_mat
 Prints matrix to console
 Inputs: MatrixXd to be printed and string for a label

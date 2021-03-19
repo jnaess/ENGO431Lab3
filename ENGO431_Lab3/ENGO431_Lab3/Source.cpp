@@ -1,8 +1,6 @@
 
-
-#include "Model.h"
-#include "Functions.h"
 #include "LSA.h"
+
 
 #include <vector>
 #include <cmath>
@@ -23,19 +21,28 @@ using namespace Eigen;
 
 int main()
 {
-    LSA ls = LSA("Tie_points_corrected.txt");
-	//LSA ls = LSA("sample.txt");
-	ls.setUpObjectPoint("object.txt");
+   //LSA ls = LSA("tie_points_corrected.txt");
+	LSA ls = LSA("sample.txt");
+	
+	//ls.setUpObjectPoints("object.txt");
+	ls.setUpObjectPoints("sample.txt");
+
 
     ls.outputModels();
 	while (!ls.criteria) {
 		ls.designAw();
 		ls.delta();
 	}
-	
-	cout << endl << "Correlation matrix cc" << endl << ls.cc();
 
-	cout << endl << "testing the object points: " << endl;
-	ls.getObjectPoints();
+	//ls.getControlPoints("control.txt","check.txt");
+	ls.getControlPoints("AOsample.txt","AOsample.txt");
+	while (!ls.criteria) {
+		ls.AOdesignAw();
+		ls.AOdelta();
+	}
+	//ls.transform();
+	ls.extract();
+
+
     return 0;
 }

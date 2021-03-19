@@ -3,7 +3,8 @@
 
 
 #include "Model.h"
-
+#include "AO.h"
+#include "Functions.h"
 
 #include <cmath>
 #include <Eigen/Dense>
@@ -19,11 +20,14 @@ class LSA {
 	
 public:
 
-    MatrixXd A, wv, xhat, xo, N, Cx, C; // design matrix, misclosure vector C: correlation coeficianet matrix
-    int counter = 0, m = 5;
+    MatrixXd A, wv, xhat, xo, N, Cx, C, v; // design matrix, misclosure vector C: correlation coeficianet matrix
+    int counter = 0, m = 5; //counts number of iterations and m is number of unknown parameters
     vector<Model> models;
     vector<Model> objectPoints;
-	bool criteria = false;
+	vector<AO> controlCoord;
+	vector<AO> objectCoord;
+	double stdv = 0.003;
+	bool criteria = false; //check if correction vector meets the criterion
 
 
     //Constructor
@@ -43,21 +47,37 @@ public:
 
     /*
     Definition:
-        Adds a satelites measurement to the vector of measurements
-        inside this epoch
+        Adds a image coordinates of left and right images
     Input:
-        The classic satpos.txt line
+        The classic tie_points_corrected.txt line
     Output:
 
     */
     void AddModel(string line);
 
+	/*
+  Definition:
+	  Builds design matrix A and misclosure vector
+  Input:
+	  
+  Output: Updates design matrix A(A), misclosure vector(wv)
 
-	
+  */
 	void designAw();
 	
+	/*
+Definition:
+	Finds correction vector, delta and estimates unknown parameters
+Input:
+
+Output: Updates delta, xhat
+
+*/
 	void delta();
 
+	void AOdesignAw();
+	void AOdelta();
+	
     /*
     Definition:
         Iterates through the vector of models and outputs all values
@@ -87,17 +107,49 @@ public:
     Output:
         
     */
-    void setUpObjectPoint(string filename);
+	void setUpObjectPoints(string filename);
 
     /*
     Definition:
-        Gets the model points via the parameters found form the least squares opperation
+        Gets the model points via the parameters found form the least squares opperation and setting up for absolute orientation
     Input:
-        none, but objectPoints must have been initialized
+         string filename of the control points(filename1), oject points(filename2) in the object space
     Output:
 
     */
-    void getObjectPoints();
+    void getControlPoints(string filename1,string filename2);
+
+
+	/*
+	Definition:
+	  After relative Orientation is done use this functions to initialize the odjectpoint vector
+  Input:
+	  string filename of the control points(filename1), oject points(filename2) in the object space, RO parameters
+  Output:
+
+  */
+	void setUpControlPoints(string filename1, string filename2, MatrixXd ROxhat);
+
+	/*
+	Definition:
+	  After absolute Orientation is done use this functions to transform the object coordinates
+  Input:
+	
+  Output: transformed object coordinates and principal point 
+
+  */
+	void transform();
+
+	/*
+	Definition:
+	  Extract the rotation angles 
+  Input:
+
+  Output:
+		rotation angles of both left and right images
+
+  */
+	void extract();
 };
 
 

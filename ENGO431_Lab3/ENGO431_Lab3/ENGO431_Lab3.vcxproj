@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -93,7 +93,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\bookm\OneDrive - University of Calgary\Winter 2021\ENGO 465 (Satellite Positioning)\Projects\eigen3</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Nuna Min\ENGO431Lab3\eigen-3.2.10;C:\Users\bookm\OneDrive - University of Calgary\Winter 2021\ENGO 465 (Satellite Positioning)\Projects\eigen3</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
@@ -133,12 +133,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AO.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="LSA.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AO.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="LSA.h" />
     <ClInclude Include="Model.h" />

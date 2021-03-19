@@ -23,34 +23,14 @@ void Model::readLine(string line) {
 
     //assign coordinate values
     //convert string to a long double
+	id = stold(arr[0]);
     x27 = stold(arr[1]);
     y27 = stold(arr[2]);
     x28 = stold(arr[3]);
     y28 = stold(arr[4]);
 }
 
-MatrixXd Model::rotate(double angle, int axis) {
-	MatrixXd R(3, 3);
-	if (axis == 1) {
-		R << 1, 0, 0,
-			0, cos(angle), sin(angle),
-			0, -sin(angle), cos(angle);
-	}
-	else if (axis == 2) {
-		R << cos(angle), 0, -sin(angle),
-			0, 1, 0,
-			sin(angle), 0, cos(angle);
-	}
-	else if (axis == 3) {
-		R << cos(angle), sin(angle), 0,
-			-sin(angle), cos(angle), 0,
-			0, 0 ,1 ;
-	}
-	else cout << "invalid axis" << endl;
-	
-	return R;
 
-}
 
 void Model::partial(MatrixXd xo) {
 	double by = xo(0,0);
@@ -64,11 +44,12 @@ void Model::partial(MatrixXd xo) {
 		-c;
 
 	RiT.resize(3,3);
-	RiT = rotate(-omega, 1) * rotate(-phi, 2) * rotate(-kappa, 3) * Ri; //Transformed to the left image
+	RiT = rotate(-omega, 1) * rotate(-phi, 2) * rotate(-kappa, 3);
+	Ri = RiT* Ri; //Transformed to the left image
 	
-	double xr = RiT(0, 0);
-	double yr = RiT(1, 0);
-	double zr = RiT(2, 0);
+	double xr = Ri(0, 0);
+	double yr = Ri(1, 0);
+	double zr = Ri(2, 0);
 	
 	MatrixXd Mby(3, 3);
 	Mby << 0, 1, 0,
@@ -112,32 +93,41 @@ void Model::modelCoord(MatrixXd xhat) {
 		-c;
 
 	RiT.resize(3, 3);
-	RiT = rotate(-xhat(2,0), 1) * rotate(-xhat(3,0), 2) * rotate(-xhat(4,0), 3) * Ri; //Transformed to the left image
-
-	double lamda = (bx * RiT(2, 0) - xhat(1, 0) * RiT(0, 0)) / (x27 * RiT(2, 0) + c * RiT(0, 0));
-	double mu = (-bx * c - xhat(1, 0) * x27) / (x27 * RiT(2, 0) + c * RiT(0, 0));
+	RiT = rotate(-xhat(2,0), 1) * rotate(-xhat(3,0), 2) * rotate(-xhat(4,0), 3); //Transformed to the left image
+	Ri = RiT * Ri;
+	double lamda = (bx * Ri(2, 0) - xhat(1, 0) * Ri(0, 0)) / (x27 * Ri(2, 0) + c * Ri(0, 0));
+	double mu = (-bx * c - xhat(1, 0) * x27) / (x27 * Ri(2, 0) + c * Ri(0, 0));
 
 	// Compute left/right model coordinates
 	xyzm_lr.resize(3,2);
 	xyzm_lr(0, 0) = lamda * x27;
 	xyzm_lr(1, 0) = lamda * y27;
 	xyzm_lr(2, 0) = -lamda * c;
-	xyzm_lr(0, 1) = mu * RiT(0, 0) + bx;
-	xyzm_lr(1, 1) = mu * RiT(1, 0) + xhat(0,0);
-	xyzm_lr(2, 1) = mu * RiT(2, 0) + xhat(1, 0);
+	xyzm_lr(0, 1) = mu * Ri(0, 0) + bx;
+	xyzm_lr(1, 1) = mu * Ri(1, 0) + xhat(0,0);
+	xyzm_lr(2, 1) = mu * Ri(2, 0) + xhat(1, 0);
+	//cout << "right and left" << endl;
+	//cout << xyzm_lr << endl;
 
 	// Calculate y-parallax value
+	
 	pY = xyzm_lr(1, 1) - xyzm_lr(1, 0);
+	//cout << fixed << setprecision(5) <<  pY << endl;
 
 	// Calculate merged model coordiantes
 	xyzm.resize(1, 3);
 	xyzm(0, 0) = xyzm_lr(0, 0);
 	xyzm(0, 1) = (xyzm_lr(1, 0) + xyzm_lr(1, 1)) / 2;
 	xyzm(0, 2) = xyzm_lr(2, 0);
-
-	cout << endl << "model coordinates" << endl << xyzm << endl;
-	//cout << "y-parallax" << endl << pY<< endl;
+	//cout << "kappa   " << xhat(4, 0) << "phi   " << xhat(3, 0) << "omega   " << xhat(2, 0) << endl;
+	RiT = rotate(xhat(4, 0), 3) * rotate(xhat(3, 0), 2) * rotate(xhat(2, 0), 1);
+	//cout <<"RiT is " <<endl<< RiT << endl;
+	cout <<fixed <<setprecision(5) << xyzm << endl;
+	
  }
+
+
+
 
 void Model::outputAll() {
     cout << "x27: " << x27 << " y27: " << y27 << " x28: " << x28 << "y28: " << y28 << endl;

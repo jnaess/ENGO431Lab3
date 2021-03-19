@@ -18,7 +18,8 @@ class Model {
 
 
 public:
-	double Pby, Pbz, Pomega, Pphi, Pkappa;
+	double  id, Pby, Pbz, Pomega, Pphi, Pkappa;
+	double Ptx = 0, Pty = 0, Ptz = 0;
 	double c = 152.15; // sample data
     //double c = 153.358; // our data
 	double bx = 92;
@@ -29,6 +30,7 @@ public:
     MatrixXd xyzm;
     //Constructor
     Model();
+
 
     /*
     Definition:
@@ -51,17 +53,8 @@ public:
 
     */
     void readLine(string line);
+	
 
-	/*
-   Definition:
-	   Returns a rotation matrix about x(1),y(2), or z(3) axis
-   Input:
-	   rotation angle and axis(1,2,3)
-   Output:
-		Rotation Matrix
-
-   */
-	MatrixXd rotate(double angle, int axis);
 
 	/*
   Definition:
@@ -73,7 +66,17 @@ public:
   */
 	void partial(MatrixXd xo);
 
+	/*
+  Definition:
+	  Finds model coordinates of the image coordinates
+  Input: unknown parameters estimated, xhat
+
+  Output:
+		updates model coordinates 
+		 */
 	void modelCoord(MatrixXd xhat);
+
+	 
     /*
     Definition:
         Outputs all values in the model formatted for readablity
